@@ -1,72 +1,78 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, PanResponder } from "react-native";
+import { View, Text, StyleSheet, PanResponder, TouchableOpacity } from "react-native";
 
 export default function App() {
   const [lines, setLines] = useState([]);
   const [current, setCurrent] = useState([]);
 
-  const panResponder = PanResponder.create({
+  const GRID = 20;
+
+  const snap = (v) => Math.round(v / GRID) * GRID;
+
+  const pan = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
 
-    onPanResponderGrant: (evt) => {
-      const { locationX, locationY } = evt.nativeEvent;
-      setCurrent([{ x: locationX, y: locationY }]);
+    onPanResponderGrant: (e) => {
+      const { locationX, locationY } = e.nativeEvent;
+      setCurrent([{ x: snap(locationX), y: snap(locationY) }]);
     },
 
-    onPanResponderMove: (evt) => {
-      const { locationX, locationY } = evt.nativeEvent;
-      setCurrent((prev) => [...prev, { x: locationX, y: locationY }]);
+    onPanResponderMove: (e) => {
+      const { locationX, locationY } = e.nativeEvent;
+      setCurrent((p) => [...p, { x: snap(locationX), y: snap(locationY) }]);
     },
 
     onPanResponderRelease: () => {
-      setLines((prev) => [...prev, current]);
+      setLines((p) => [...p, current]);
       setCurrent([]);
     }
   });
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>📏 DAL PLANOS PRO</Text>
+    <View style={s.container}>
+      <Text style={s.title}>📐 DAL CAD PRO</Text>
 
-      <View style={styles.canvas} {...panResponder.panHandlers}>
+      <View style={s.canvas} {...pan.panHandlers}>
 
-        {/* GRILLA */}
-        {[...Array(30)].map((_, i) => (
-          <View key={"h" + i} style={{ position: "absolute", top: i * 20, left: 0, right: 0, height: 1, backgroundColor: "#eee" }} />
+        {/* GRID */}
+        {[...Array(40)].map((_, i) => (
+          <View key={"h"+i} style={{position:"absolute", top:i*GRID, left:0, right:0, height:1, backgroundColor:"#eee"}}/>
         ))}
-        {[...Array(30)].map((_, i) => (
-          <View key={"v" + i} style={{ position: "absolute", left: i * 20, top: 0, bottom: 0, width: 1, backgroundColor: "#eee" }} />
+        {[...Array(40)].map((_, i) => (
+          <View key={"v"+i} style={{position:"absolute", left:i*GRID, top:0, bottom:0, width:1, backgroundColor:"#eee"}}/>
         ))}
 
-        {/* DIBUJO */}
+        {/* DRAW */}
         {[...lines, current].map((line, i) =>
           line.map((p, j) => (
-            <View
-              key={i + "-" + j}
-              style={{
-                position: "absolute",
-                left: p.x,
-                top: p.y,
-                width: 3,
-                height: 3,
-                backgroundColor: "black"
-              }}
-            />
+            <View key={i+"-"+j} style={{
+              position:"absolute",
+              left:p.x,
+              top:p.y,
+              width:4,
+              height:4,
+              backgroundColor:"black"
+            }}/>
           ))
         )}
 
       </View>
+
+      {/* TOOLBAR */}
+      <View style={s.bar}>
+        <TouchableOpacity style={s.btn} onPress={()=>setLines([])}>
+          <Text>Borrar</Text>
+        </TouchableOpacity>
+      </View>
+
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, paddingTop: 40, backgroundColor: "#ddd" },
-  title: { textAlign: "center", fontSize: 18 },
-  canvas: {
-    flex: 1,
-    margin: 10,
-    backgroundColor: "#fff",
-    borderWidth: 1
-  }
+const s = StyleSheet.create({
+  container:{flex:1,paddingTop:40,backgroundColor:"#ddd"},
+  title:{textAlign:"center",fontSize:18},
+  canvas:{flex:1,margin:10,backgroundColor:"#fff",borderWidth:1},
+  bar:{flexDirection:"row",justifyContent:"center",padding:10},
+  btn:{backgroundColor:"#ccc",padding:10}
 });
