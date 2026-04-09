@@ -1,0 +1,23 @@
+let luz;
+
+function modoDia(scene) {
+  if (luz) scene.remove(luz);
+
+  luz = new THREE.DirectionalLight(0xffffff, 1);
+  luz.position.set(10, 10, 10);
+
+  scene.background = new THREE.Color(0x87ceeb);
+
+  scene.add(luz);
+}
+
+function modoNoche(scene) {
+  if (luz) scene.remove(luz);
+
+  luz = new THREE.PointLight(0xffffff, 0.5);
+  luz.position.set(0, 5, 5);
+
+  scene.background = new THREE.Color(0x000022);
+
+  scene.add(luz);
+}
