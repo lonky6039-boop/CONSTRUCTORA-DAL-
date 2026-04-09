@@ -7,6 +7,13 @@ export function iniciarVoz(callback) {
     const texto = event.results[0][0].transcript;
     callback(texto);
   };
+iniciarVoz((comando) => {
+  console.log("Orden:", comando);
 
+  if (comando.includes("casa")) {
+    const plano = generarPlanoIA(comando);
+    dibujarPlano(plano);
+  }
+});
   reconocimiento.start();
 }
