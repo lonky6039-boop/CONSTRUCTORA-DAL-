@@ -1,0 +1,19 @@
+function crearCimiento(p1, p2, scene) {
+  const largo = p1.distanceTo(p2);
+
+  const geo = new THREE.BoxGeometry(largo, 0.4, 0.3);
+  const mat = new THREE.MeshStandardMaterial({ color: 0x654321 });
+
+  const cim = new THREE.Mesh(geo, mat);
+
+  cim.position.set(
+    (p1.x + p2.x) / 2,
+    (p1.y + p2.y) / 2,
+    -0.15
+  );
+
+  cim.rotation.z = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+
+  scene.add(cim);
+}
+crearCimiento(p1, p2, scene);
