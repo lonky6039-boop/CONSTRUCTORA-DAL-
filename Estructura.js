@@ -7,3 +7,20 @@ export function calcularCargas(area, altura) {
     porColumna: (cargaMuerta + cargaViva) / 4
   };
 }
+export function optimizarEstructura(datos) {
+  let mejoras = [];
+
+  if (datos.deformacion > 0.02) {
+    mejoras.push("Aumentar altura de viga");
+  }
+
+  if (datos.tension > 150) {
+    mejoras.push("Agregar armadura de refuerzo");
+  }
+
+  if (datos.momento > 10000) {
+    mejoras.push("Reducir luz o agregar columna intermedia");
+  }
+
+  return mejoras;
+}
