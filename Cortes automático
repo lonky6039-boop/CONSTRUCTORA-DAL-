@@ -1,0 +1,12 @@
+function generarCorte(scene) {
+  const geo = new THREE.PlaneGeometry(20, 10);
+  const mat = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide
+  });
+
+  const plano = new THREE.Mesh(geo, mat);
+  plano.position.z = 5;
+
+  scene.add(plano);
+}
