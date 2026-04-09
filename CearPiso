@@ -7,3 +7,4 @@ function crearPiso(scene) {
 
   scene.add(piso);
 }
+piso.receiveShadow = true;
