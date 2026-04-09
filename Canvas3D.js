@@ -10,3 +10,4 @@ function crearColumna(x, y, scene) {
 
   scene.add(col);
 }
+<Canvas3D tool={tool} material={material} />
