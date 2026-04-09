@@ -1,0 +1,17 @@
+export function detectarFallas(datos) {
+  let errores = [];
+
+  if (datos.columna === "❌ Columna insuficiente") {
+    errores.push("Aumentar sección de columna");
+  }
+
+  if (datos.viento > 5000) {
+    errores.push("Refuerzo por viento necesario");
+  }
+
+  if (datos.nieve > 8000) {
+    errores.push("Techo requiere mayor pendiente");
+  }
+
+  return errores;
+}
