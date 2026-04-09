@@ -1,91 +1,120 @@
-import React, { useState } from "react";
-import Canvas3D from "../components/Canvas3D";
-
-export default function Editor() {
-  const [tool, setTool] = useState("muro");
-
-  return (
-    <div>
-      <h1>CONSTRUCTORA DAL</h1>
-
-      <div style={{ marginBottom: "10px" }}>
-        <button onClick={() => setTool("muro")}>Muro</button>
-        <button onClick={() => setTool("puerta")}>Puerta</button>
-        <button onClick={() => setTool("ventana")}>Ventana</button>
-      </div>
-
-      <Canvas3D tool={tool} />
-    </div>
-  );
-}
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
 
 export default function Canvas3D({ tool }) {
   const mountRef = useRef(null);
 
+  const [puntos, setPuntos] = useState([]);
+  const [objetos, setObjetos] = useState([]);
+
   useEffect(() => {
     const scene = new THREE.Scene();
 
     const camera = new THREE.OrthographicCamera(
-      window.innerWidth / -100,
-      window.innerWidth / 100,
-      window.innerHeight / 100,
-      window.innerHeight / -100,
-      1,
-      1000
+      -20, 20, 15, -15, 1, 1000
     );
 
-    camera.position.z = 10;
+    camera.position.z = 50;
 
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     mountRef.current.appendChild(renderer.domElement);
+
+    // GRID tipo AutoCAD
+    const grid = new THREE.GridHelper(50, 50);
+    scene.add(grid);
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
-    let puntos = [];
+    function snap(valor) {
+      return Math.round(valor * 2) / 2; // precisión cada 0.5 m
+    }
 
     function onClick(event) {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
       raycaster.setFromCamera(mouse, camera);
-      const point = raycaster.ray.origin.clone();
+      const punto = raycaster.ray.origin.clone();
 
-      puntos.push(point);
+      punto.x = snap(punto.x);
+      punto.y = snap(punto.y);
 
-      if (puntos.length === 2) {
-        crearElemento(puntos[0], puntos[1]);
-        puntos = [];
+      const nuevos = [...puntos, punto];
+
+      if (nuevos.length === 2) {
+        crearElemento(nuevos[0], nuevos[1], scene);
+        setObjetos(prev => [...prev, { p1: nuevos[0], p2: nuevos[1] }]);
+        setPuntos([]);
+      } else {
+        setPuntos(nuevos);
       }
     }
 
-    function crearElemento(p1, p2) {
-      const length = p1.distanceTo(p2);
+    function crearElemento(p1, p2, scene) {
+      const distancia = p1.distanceTo(p2);
 
-      const geometry = new THREE.BoxGeometry(length, 0.2, 0.2);
+      const altura = 3; // muro real
+      const espesor = 0.15; // 15 cm
 
-      let color = 0x888888;
+      const geometry = new THREE.BoxGeometry(distancia, espesor, altura);
 
-      if (tool === "puerta") color = 0x654321;
-      if (tool === "ventana") color = 0x00aaff;
-
-      const material = new THREE.MeshBasicMaterial({ color });
+      const material = new THREE.MeshStandardMaterial({
+        color: tool === "muro" ? 0x999999 :
+               tool === "puerta" ? 0x5a3e2b :
+               0x00aaff
+      });
 
       const mesh = new THREE.Mesh(geometry, material);
 
       mesh.position.set(
         (p1.x + p2.x) / 2,
         (p1.y + p2.y) / 2,
-        0
+        altura / 2
       );
 
       mesh.rotation.z = Math.atan2(p2.y - p1.y, p2.x - p1.x);
 
       scene.add(mesh);
+
+      // 👉 AGREGAR COTA
+      crearCota(p1, p2, distancia, scene);
     }
+
+    function crearCota(p1, p2, distancia, scene) {
+      const loader = new THREE.FontLoader();
+
+      loader.load(
+        "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
+        function (font) {
+          const textGeo = new THREE.TextGeometry(
+            distancia.toFixed(2) + " m",
+            {
+              font: font,
+              size: 0.3,
+              height: 0.05,
+            }
+          );
+
+          const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
+          const textMesh = new THREE.Mesh(textGeo, material);
+
+          textMesh.position.set(
+            (p1.x + p2.x) / 2,
+            (p1.y + p2.y) / 2 + 0.5,
+            0
+          );
+
+          scene.add(textMesh);
+        }
+      );
+    }
+
+    // LUZ REALISTA
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(10, 10, 10);
+    scene.add(light);
 
     window.addEventListener("click", onClick);
 
@@ -100,7 +129,7 @@ export default function Canvas3D({ tool }) {
       window.removeEventListener("click", onClick);
       mountRef.current.removeChild(renderer.domElement);
     };
-  }, [tool]);
+  }, [tool, puntos]);
 
   return <div ref={mountRef}></div>;
 }
