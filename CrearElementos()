@@ -1,14 +1,45 @@
-function generarColumnas(p1, p2, scene) {
+function crearElemento(p1, p2, scene, tipoMaterial = "ladrillo") {
   const distancia = p1.distanceTo(p2);
-  const cantidad = Math.floor(distancia / 3);
 
-  for (let i = 0; i <= cantidad; i++) {
-    const t = i / cantidad;
+  const altura = 3;
+  const espesor = 0.15;
 
-    const x = p1.x + (p2.x - p1.x) * t;
-    const y = p1.y + (p2.y - p1.y) * t;
+  const geometry = new THREE.BoxGeometry(distancia, espesor, altura);
 
-    crearColumna(x, y, scene);
+  // 🎨 COLORES SEGÚN MATERIAL
+  let color;
+
+  switch (tipoMaterial) {
+    case "ladrillo_macizo":
+      color = 0x8B2C2C;
+      break;
+    case "ladrillo_ceramico":
+      color = 0xF97316;
+      break;
+    case "bloque":
+    case "hormigon":
+      color = 0x9CA3AF;
+      break;
+    default:
+      color = 0x8B2C2C;
   }
+
+  const material = new THREE.MeshStandardMaterial({ color });
+
+  const mesh = new THREE.Mesh(geometry, material);
+
+  mesh.position.set(
+    (p1.x + p2.x) / 2,
+    (p1.y + p2.y) / 2,
+    altura / 2
+  );
+
+  mesh.rotation.z = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+
+  scene.add(mesh);
+
+  // Integración estructural
+  crearCimiento(p1, p2, scene);
+  crearViga(p1, p2, scene);
+  generarColumnas(p1, p2, scene);
 }
-generarColumnas(p1, p2, scene);
