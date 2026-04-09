@@ -1,1 +1,6 @@
+const resultado = analisisEstructural(500, 5);
 
+console.log("Momento:", resultado.momento);
+console.log("Tensión:", resultado.tension);
+console.log("Deformación:", resultado.deformacion);
+console.log("Viga recomendada:", resultado.viga);
