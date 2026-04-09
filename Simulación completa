@@ -1,0 +1,20 @@
+export function simulacion(area, altura) {
+  const cargas = calcularCargas(area, altura);
+  const viento = calcularViento(area);
+  const nieve = calcularNieve(area);
+  const columna = verificarColumna(cargas.porColumna);
+
+  const fallas = detectarFallas({
+    columna,
+    viento,
+    nieve
+  });
+
+  return {
+    cargas,
+    viento,
+    nieve,
+    columna,
+    fallas
+  };
+}
