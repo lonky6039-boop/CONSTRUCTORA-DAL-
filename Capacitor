@@ -1,0 +1,4 @@
+npm install @capacitor/core @capacitor/cli
+npx cap init constructora-dal com.dal.app
+npx cap add android
+npx cap open android
