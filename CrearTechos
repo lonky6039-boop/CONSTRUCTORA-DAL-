@@ -1,0 +1,18 @@
+function crearTecho(p1, p2, scene) {
+  const largo = p1.distanceTo(p2);
+
+  const geo = new THREE.ConeGeometry(largo / 2, 1, 4);
+  const mat = new THREE.MeshStandardMaterial({ color: 0x8b0000 });
+
+  const techo = new THREE.Mesh(geo, mat);
+
+  techo.position.set(
+    (p1.x + p2.x) / 2,
+    (p1.y + p2.y) / 2,
+    4
+  );
+
+  techo.rotation.x = Math.PI / 2;
+
+  scene.add(techo);
+}
