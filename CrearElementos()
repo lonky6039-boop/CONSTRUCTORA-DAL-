@@ -1,0 +1,14 @@
+function generarColumnas(p1, p2, scene) {
+  const distancia = p1.distanceTo(p2);
+  const cantidad = Math.floor(distancia / 3);
+
+  for (let i = 0; i <= cantidad; i++) {
+    const t = i / cantidad;
+
+    const x = p1.x + (p2.x - p1.x) * t;
+    const y = p1.y + (p2.y - p1.y) * t;
+
+    crearColumna(x, y, scene);
+  }
+}
+generarColumnas(p1, p2, scene);
