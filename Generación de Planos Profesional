@@ -1,0 +1,11 @@
+import jsPDF from "jspdf";
+
+export function generarPlanoProfesional(datos) {
+  const pdf = new jsPDF();
+
+  pdf.text("PLANO ESTRUCTURAL", 20, 20);
+  pdf.text(`Momento: ${datos.momento}`, 20, 40);
+  pdf.text(`Tensión: ${datos.tension}`, 20, 50);
+
+  pdf.save("plano_profesional.pdf");
+}
