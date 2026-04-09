@@ -43,3 +43,4 @@ function crearElemento(p1, p2, scene, tipoMaterial = "ladrillo") {
   crearViga(p1, p2, scene);
   generarColumnas(p1, p2, scene);
 }
+crearElemento(puntos[0], puntos[1], scene, material);
