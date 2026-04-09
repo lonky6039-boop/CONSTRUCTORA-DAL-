@@ -21,3 +21,21 @@ function modoNoche(scene) {
 
   scene.add(luz);
 }
+// Luz principal (sol)
+const sun = new THREE.DirectionalLight(0xffffff, 1.2);
+sun.position.set(10, 20, 10);
+sun.castShadow = true;
+
+scene.add(sun);
+
+// Luz ambiente suave
+const ambient = new THREE.AmbientLight(0xffffff, 0.4);
+scene.add(ambient);
+renderer.shadowMap.enabled = true;
+
+sun.shadow.mapSize.width = 2048;
+sun.shadow.mapSize.height = 2048;
+
+// Activar en objetos
+mesh.castShadow = true;
+mesh.receiveShadow = true;
