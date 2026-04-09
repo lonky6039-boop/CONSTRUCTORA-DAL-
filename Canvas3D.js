@@ -11,3 +11,4 @@ function crearColumna(x, y, scene) {
   scene.add(col);
 }
 <Canvas3D tool={tool} material={material} />
+export default function Canvas3D({ tool, material }) {
