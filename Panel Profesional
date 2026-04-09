@@ -1,0 +1,5 @@
+console.log({
+  estado: "OK",
+  alertas: resultado.fallas,
+  mejoras: optimizarEstructura(resultado)
+});
