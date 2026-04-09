@@ -46,3 +46,15 @@ router.get("/", async (req, res) => {
 });
 
 module.exports = router;
+const guardarPlano = async () => {
+  await fetch("http://localhost:5000/api/planos", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      nombre: "Plano DAL",
+      datos: objetos,
+    }),
+  });
+
+  alert("Plano guardado");
+};
