@@ -1,0 +1,5 @@
+export function calcularNieve(area) {
+  const nieve = 100; // kg/m² (zona sur)
+
+  return area * nieve;
+}
