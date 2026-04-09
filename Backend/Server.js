@@ -66,3 +66,13 @@ app.post("/ia", async (req, res) => {
 
   res.json(respuesta);
 });
+// usuarios.js
+const users = [];
+
+export function registrar(usuario) {
+  users.push(usuario);
+}
+
+export function login(nombre) {
+  return users.find(u => u.nombre === nombre);
+    }
