@@ -1,4 +1,4 @@
-export const materiales = {
+const material = obtenerMaterial(tipoMaterial);
   muro: {
     espesor: 0.15,
     altura: 3,
