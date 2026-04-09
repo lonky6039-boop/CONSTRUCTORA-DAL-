@@ -1,0 +1,27 @@
+// ========================================= // APP PROFESIONAL BASE - DAL CAD PRO // ESTRUCTURA COMPLETA // =========================================
+
+// 📁 ESTRUCTURA: // /App.js // /src/screens/HomeScreen.js // /src/screens/EditorScreen.js // /src/components/Toolbar.js // /src/components/Canvas.js // /src/navigation/AppNavigator.js
+
+// ========================================= // App.js // =========================================
+
+import React from 'react'; import AppNavigator from './src/navigation/AppNavigator';
+
+export default function App() { return <AppNavigator />; }
+
+// ========================================= // src/navigation/AppNavigator.js // =========================================
+
+import React from 'react'; import { NavigationContainer } from '@react-navigation/native'; import { createStackNavigator } from '@react-navigation/stack'; import HomeScreen from '../screens/HomeScreen'; import EditorScreen from '../screens/EditorScreen';
+
+const Stack = createStackNavigator();
+
+export default function AppNavigator() { return ( <NavigationContainer> <Stack.Navigator> <Stack.Screen name="Inicio" component={HomeScreen} /> <Stack.Screen name="Editor" component={EditorScreen} /> </Stack.Navigator> </NavigationContainer> ); }
+
+// ========================================= // src/screens/HomeScreen.js // =========================================
+
+import React from 'react'; import { View, Text, Button, StyleSheet } from 'react-native';
+
+export default function HomeScreen({ navigation }) { return ( <View style={styles.container}> <Text style={styles.title}>CONSTRUCTORA DAL</Text> <Button title="Crear Plano" onPress={() => navigation.navigate('Editor')} /> </View> ); }
+
+const styles = StyleSheet.create({ container: { flex: 1, justifyContent: 'center', alignItems: 'center' }, title: { fontSize: 24 } });
+
+//
