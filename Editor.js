@@ -1,2 +1,1 @@
-<button onClick={() => modoDia()}>Día</button>
-<button onClick={() => modoNoche()}>Noche</button>
+const [material, setMaterial] = useState("ladrillo_macizo");
