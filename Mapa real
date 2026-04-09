@@ -3,3 +3,12 @@
   height="400"
   src="https://maps.google.com/maps?q=El%20Bolson&t=k&z=18&output=embed">
 </iframe>
+const loader = new THREE.CubeTextureLoader();
+scene.background = loader.load([
+  "/sky/px.jpg",
+  "/sky/nx.jpg",
+  "/sky/py.jpg",
+  "/sky/ny.jpg",
+  "/sky/pz.jpg",
+  "/sky/nz.jpg"
+]);
