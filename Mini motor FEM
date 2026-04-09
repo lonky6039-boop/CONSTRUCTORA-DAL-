@@ -1,12 +1,11 @@
-export function FEM(nodos) {
-  let resultados = [];
+export function matrizRigidez(k) {
+  return [
+    [k, -k],
+    [-k, k]
+  ];
+}
 
-  nodos.forEach((nodo, i) => {
-    resultados.push({
-      nodo: i,
-      desplazamiento: nodo.carga / 1000,
-    });
-  });
-
-  return resultados;
+export function resolverSistema(K, F) {
+  // simplificado
+  return F.map(f => f / K[0][0]);
 }
