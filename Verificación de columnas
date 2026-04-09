@@ -1,0 +1,9 @@
+export function verificarColumna(carga) {
+  const capacidad = 10000; // kg aprox columna 20x20 hormigón
+
+  if (carga > capacidad) {
+    return "❌ Columna insuficiente";
+  } else {
+    return "✅ Columna correcta";
+  }
+}
