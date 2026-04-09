@@ -1,0 +1,17 @@
+export function analisisEstructural(q, L) {
+  const M = calcularMomento(q, L);
+  const W = 500; // valor ejemplo
+  const E = 200000;
+  const I = 3000;
+
+  const tension = calcularTension(M, W);
+  const deformacion = calcularDeformacion(q, L, E, I);
+  const viga = dimensionarViga(M);
+
+  return {
+    momento: M,
+    tension,
+    deformacion,
+    viga
+  };
+}
