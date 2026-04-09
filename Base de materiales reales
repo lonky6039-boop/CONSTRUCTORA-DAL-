@@ -1,0 +1,5 @@
+export const materialesDB = [
+  { nombre: "Ladrillo", precio: 200 },
+  { nombre: "Cemento", precio: 8000 },
+  { nombre: "Arena", precio: 5000 }
+];
