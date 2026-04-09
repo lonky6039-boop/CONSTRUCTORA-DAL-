@@ -58,3 +58,11 @@ const guardarPlano = async () => {
 
   alert("Plano guardado");
 };
+app.post("/ia", async (req, res) => {
+  const prompt = req.body.prompt;
+
+  // Aquí conectas con IA real (OpenAI)
+  const respuesta = await generarPlanoIA(prompt);
+
+  res.json(respuesta);
+});
