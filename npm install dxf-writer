@@ -1,0 +1,16 @@
+import Drawing from "dxf-writer";
+
+export function exportarDXF(objetos) {
+  const d = new Drawing();
+
+  objetos.forEach(o => {
+    d.drawLine(o.p1.x, o.p1.y, o.p2.x, o.p2.y);
+  });
+
+  const blob = new Blob([d.toDxfString()], { type: "application/dxf" });
+
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "plano.dxf";
+  link.click();
+}
