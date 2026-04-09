@@ -1,1 +1,6 @@
 <button onClick={guardarPlano}>Guardar Plano</button>
+<select onChange={(e) => setMaterial(e.target.value)}>
+  <option value="ladrillo_macizo">Ladrillo Macizo</option>
+  <option value="ladrillo_ceramico">Ladrillo Cerámico</option>
+  <option value="bloque">Bloque / Hormigón</option>
+</select>
