@@ -1,0 +1,5 @@
+export function dimensionarViga(M) {
+  if (M < 5000) return "20x30 cm";
+  if (M < 10000) return "25x40 cm";
+  return "30x50 cm + refuerzo";
+}
