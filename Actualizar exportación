@@ -1,0 +1,5 @@
+pdf.setTextColor(30, 58, 138); // azul técnico
+pdf.text("DAL CONSTRUCTORA", 20, 20);
+
+pdf.setTextColor(0, 0, 0);
+pdf.text("Construí con inteligencia.", 20, 30);
