@@ -1,0 +1,5 @@
+console.log({
+  usuarios: 1200,
+  ingresos: "$4500 USD",
+  proyectos: 320
+});
