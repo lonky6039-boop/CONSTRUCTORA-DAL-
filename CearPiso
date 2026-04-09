@@ -1,0 +1,9 @@
+function crearPiso(scene) {
+  const geo = new THREE.PlaneGeometry(50, 50);
+  const mat = new THREE.MeshStandardMaterial({ color: 0xdddddd });
+
+  const piso = new THREE.Mesh(geo, mat);
+  piso.rotation.x = -Math.PI / 2;
+
+  scene.add(piso);
+}
