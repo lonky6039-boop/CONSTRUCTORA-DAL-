@@ -1,0 +1,12 @@
+export function FEM(nodos) {
+  let resultados = [];
+
+  nodos.forEach((nodo, i) => {
+    resultados.push({
+      nodo: i,
+      desplazamiento: nodo.carga / 1000,
+    });
+  });
+
+  return resultados;
+}
