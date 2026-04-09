@@ -1,0 +1,12 @@
+const pasos = [
+  "1. Excavación (zanjeo)",
+  "2. Cimientos",
+  "3. Columnas",
+  "4. Encadenado",
+  "5. Muros",
+  "6. Techo"
+];
+
+function mostrarPasos() {
+  pasos.forEach(p => console.log(p));
+}
