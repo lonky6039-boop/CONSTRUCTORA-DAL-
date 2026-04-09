@@ -1,0 +1,3 @@
+export function calcularDeformacion(q, L, E, I) {
+  return (5 * q * Math.pow(L, 4)) / (384 * E * I);
+}
