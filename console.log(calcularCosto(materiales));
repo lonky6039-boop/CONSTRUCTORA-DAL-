@@ -1,0 +1,7 @@
+export function calcularCosto(materiales) {
+  return {
+    ladrillos: materiales.ladrillos * 200,
+    cemento: materiales.cemento * 8000,
+    arena: materiales.arena * 5000,
+  };
+}
